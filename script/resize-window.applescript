@@ -3,13 +3,13 @@
 # Required parameters:
 # @raycast.schemaVersion 1
 # @raycast.title Resize Front Window
-# @raycast.mode fullOutput
+# @raycast.mode silent
 
 # Optional parameters:
 # @raycast.icon 🖥️
 # @raycast.argument1 { "type": "text", "placeholder": "width (1920)", "optional": true }
 # @raycast.argument2 { "type": "text", "placeholder": "height (1080)", "optional": true }
-# @raycast.argument3 { "type": "dropdown", "placeholder": "position (CENTER)", "optional": true, "data":[ {"title": "Center", "value": "CENTER"}, {"title": "Top Left", "value": "TL"}, {"title": "Top Right", "value": "TR"}, {"title": "Bottom Left", "value": "BL"}, {"title": "Bottom Right", "value": "BR"} ] }
+# @raycast.argument3 { "type": "dropdown", "placeholder": "position (CENTER)", "optional": true, "data":[ {"title": "Center", "value": "C"}, {"title": "Top Left", "value": "TL"}, {"title": "Top Right", "value": "TR"}, {"title": "Bottom Left", "value": "BL"}, {"title": "Bottom Right", "value": "BR"} ] }
 # @raycast.packageName Window
 
 # Documentation:
@@ -53,7 +53,7 @@ on run argv
 				set reqPos to item 3 of argv as string
 			end if
 		on error
-			set reqPos to "CENTER"
+			set reqPos to "C"
 		end try
 	end if
 	
@@ -81,23 +81,23 @@ on run argv
 	set x1 to 0
 	set y1 to 0
 	
-	if reqPos is "TL" then -- Top Left
+	if reqPos is "BL" then -- Bottom Left
 		set x1 to usableX
 		set y1 to usableY + usableH - reqH
-		
-	else if reqPos is "TR" then -- Top Right
-		set x1 to usableX + usableW - reqW
-		set y1 to usableY + usableH - reqH
-		
-	else if reqPos is "BL" then -- Bottom Left
-		set x1 to usableX
-		set y1 to usableY
 		
 	else if reqPos is "BR" then -- Bottom Right
 		set x1 to usableX + usableW - reqW
+		set y1 to usableY + usableH - reqH
+		
+	else if reqPos is "TL" then -- Top Left
+		set x1 to usableX
 		set y1 to usableY
 		
-	else if reqPos is "CENTER" then -- Center
+	else if reqPos is "TR" then -- Top Right
+		set x1 to usableX + usableW - reqW
+		set y1 to usableY
+		
+	else if reqPos is "C" then -- Center
 		set x1 to usableX + ((usableW - reqW) / 2)
 		set y1 to usableY + ((usableH - reqH) / 2)
 		
